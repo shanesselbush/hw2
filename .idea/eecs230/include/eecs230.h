@@ -233,6 +233,14 @@ void sort(C& c, Pred p)
     std::sort(c.begin(), c.end(), p);
 }
 
+// Sort a container in reverse without exposing the client to iterators
+template<typename C>
+// requires Container<C>()
+void sort_reverse(C& c)
+{
+    sort(c, [=](auto x, auto y) { return x > y; });
+}
+
 // Find a value in a container without exposing the client to iterators
 template<typename C, typename Val>
 // requires Container<C>() && Equality_comparable<C,Val>()
