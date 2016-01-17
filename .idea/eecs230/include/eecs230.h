@@ -238,7 +238,7 @@ template<typename C>
 // requires Container<C>()
 void sort_reverse(C& c)
 {
-    sort(c, [=](auto x, auto y) { return x > y; });
+    sort(c, [=](typename C::value_type& x, typename C::value_type& y) { return x > y; });
 }
 
 // Find a value in a container without exposing the client to iterators
