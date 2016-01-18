@@ -53,7 +53,7 @@ void print_change(vector<int> denominations, vector<int> change) {
 int main()
 try {
     auto denoms = read_denominations();
-    sort_reverse(denoms);
+    sort(denoms, [=](double x, double y) {return x>y;});
     auto amount = read_amount();
     auto change = make_change(denoms, amount);
     print_change(denoms, change);
