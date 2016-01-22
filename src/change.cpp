@@ -6,16 +6,27 @@
 //
 //   - User inputs "4 9 17 0\n", returns { 4, 9, 17 }
 //
-vector<int> read_denominations()
-{
-    // your code goes here
+vector<int> read_denominations() {
+    cout<< "enter coin denominations (0 when done)" << "\n";
+    vector<int> result;
+    while (true) {
+        int denominations;
+        cin >> denominations;
+        if (!cin)error("could not read denominations");
+        if (denominations == 0) break;
+        result.push_back(denominations);
+    }
+    return result;
 }
 
 // Reads an int from the user after prompting for the amount to make
 // change for. Calls error on read error.
-int read_amount()
-{
-    // your code goes here
+int read_amount() {
+    int amount;
+    cout << "enter value you want to make change for" << "\n";
+    cin >> amount;
+    if (!cin) error("Could not read amount");
+    return amount;
 }
 
 // Computes change for the given denominations and amount. Assumes that
@@ -32,7 +43,17 @@ int read_amount()
 //   - make_change({2}, 3) calls error("Could not make change.")
 //
 vector<int> make_change(vector<int> denominations, int amount) {
-    // your code goes here
+    vector<int> result;
+    int change;
+    for (int d: denominations) {
+        change = amount / d;
+        amount = amount % d;
+        result.push_back(change);
+    }
+    if (amount != 0) error("could not make change");
+
+    return result;
+
 }
 
 // Given the vector of denominations and vector of change, prints
@@ -46,19 +67,23 @@ vector<int> make_change(vector<int> denominations, int amount) {
 //        3 coin(s) of denomination 10
 //        0 coin(s) of denomination 5
 //        8 coin(s) of denomination 1
-void print_change(vector<int> denominations, vector<int> change) {
-    // your code goes here
+void print_change(vector<int> denominations, vector<int> change){
+    cout << "Change is:" << "\n";
+    for (int i=0;i<change.size();i++){
+        cout << change[i] << " coin(s) of denomination " << denominations[i] << "\n";
+    }
+
 }
 
 int main()
 try {
     auto denoms = read_denominations();
-    sort(denoms, [=](double x, double y) {return x>y;});
+    sort(denoms, [=](double x, double y) { return x > y; });
     auto amount = read_amount();
     auto change = make_change(denoms, amount);
     print_change(denoms, change);
 }
-catch (runtime_error& e) {
+catch (runtime_error &e) {
     cerr << "runtime error: " << e.what() << '\n';
     return 1;
 }
